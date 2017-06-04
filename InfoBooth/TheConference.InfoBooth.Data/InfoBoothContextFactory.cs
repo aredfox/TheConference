@@ -17,6 +17,8 @@ namespace TheConference.InfoBooth.Data
 
         private void ListDataFromInfoBoothPerspective(InfoBoothContext db) {
             Console.Clear();
+
+            Console.WriteLine("SESSIONS: ");
             foreach(var session in db.Sessions.Include(e => e.Room).Include(e => e.Track).Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker).OrderBy(s => s.Start).ToList()) {
                 Console.WriteLine($"{session.Title.ToUpper()}");
                 Console.WriteLine($"  ABOUT: {session.Description}");
@@ -24,6 +26,24 @@ namespace TheConference.InfoBooth.Data
                 Console.WriteLine($"@@ [ {session.Level.ToString()} | {session.Duration} | {session.Room.Name} ]");
                 Console.WriteLine();
             }
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("ATTENDEES: ");
+            Console.WriteLine(String.Join(", ", db.Attendees.ToList().Select(s => s.FullName)));
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("SPEAKERS: ");
+            Console.WriteLine(String.Join(", ", db.Speakers.ToList().Select(s => s.FullName)));
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.WriteLine("ATTENDEES minus SPEAKERS: ");
+            Console.WriteLine(String.Join(", ", db.Attendees.Where(a => a.GetType() != typeof(Speaker)).ToList().Select(s => s.FullName)));
 
             Console.ReadKey();
         }

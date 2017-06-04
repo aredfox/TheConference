@@ -11,8 +11,7 @@ namespace TheConference.InfoBooth.Data
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Room> Rooms { get; set; }
 
-        public InfoBoothContext() : base() { 
-        }
+        public InfoBoothContext() : base() { }
 
         public InfoBoothContext(DbContextOptions<InfoBoothContext> infoBoothContextOptions) 
             : base(infoBoothContextOptions) { }

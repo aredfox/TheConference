@@ -3,3 +3,6 @@
 
 Update database command:
    "dotnet ef --startup-project ../../TheConference.Infrastructure.ConsoleApp database update"
+
+Seed database command:
+   "dotnet run ../../TheConference.Infrastructure.ConsoleApp seedInfoBooth"

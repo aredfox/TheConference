@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TheConference.InfoBooth.Core.Model;
 
 namespace TheConference.InfoBooth.Data.Migrations
 {
@@ -10,46 +11,39 @@ namespace TheConference.InfoBooth.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Rooms",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Speakers",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(nullable: false),
                     Biography = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Speakers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tracks",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Tracks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Events",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     End = table.Column<DateTime>(nullable: false),
@@ -61,8 +55,7 @@ namespace TheConference.InfoBooth.Data.Migrations
                     Level = table.Column<int>(nullable: true),
                     TrackId = table.Column<Guid>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Events_Rooms_RoomId",
@@ -80,13 +73,11 @@ namespace TheConference.InfoBooth.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "SpeakersPerSession",
-                columns: table => new
-                {
+                columns: table => new {
                     SessionId = table.Column<Guid>(nullable: false),
                     SpeakerId = table.Column<Guid>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_SpeakersPerSession", x => new { x.SessionId, x.SpeakerId });
                     table.ForeignKey(
                         name: "FK_SpeakersPerSession_Events_SessionId",

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using TheConference.InfoBooth.Data;
 
 namespace TheConference.Infrastructure.ConsoleApp
 {
@@ -6,7 +7,16 @@ namespace TheConference.Infrastructure.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args == null) return;
+
+            var firstArgument = args.ToList().Select(a => a.Trim().ToLower()).FirstOrDefault();
+            if (firstArgument == null) return;
+
+            if (firstArgument.Equals("seedinfobooth")) {
+                using (var db = new InfoBoothContextFactory().Create(seed: true))
+                {
+                }
+            }
         }
     }
 }

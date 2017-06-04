@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TheConference.InfoBooth.Core.Model;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
@@ -7,8 +9,13 @@ namespace TheConference.InfoBooth.Data
 {
     public class InfoBoothContextFactory : DefaultDbContextFactory<InfoBoothContext>
     {
-        protected override void Seed()
-        {
+        private void SaveChanges(DbContext db) {
+            Console.WriteLine(" - Saving changes...");
+            db.SaveChanges();
+            Console.WriteLine("   Saved changes.");
+        }
+
+        protected override void Seed() {
             var dbFactory = new InfoBoothContextFactory();
             using (var db = dbFactory.Create())
             {
@@ -21,6 +28,14 @@ namespace TheConference.InfoBooth.Data
                 };
                 db.AddRange(rooms);
                 Console.WriteLine("   Added rooms.");
+
+                Console.WriteLine(" - Start adding tracks...");
+                var tracks = new List<Track> {
+                    Track.Create("Developer", "Developers, developers, developers!"),
+                    Track.Create("DevOps", "It's sysadmin day again!")
+                };
+                db.AddRange(tracks);
+                Console.WriteLine("   Added tracks.");
 
                 Console.WriteLine(" - Start adding attendees...");
                 var attendees = new List<Attendee>() {
@@ -60,9 +75,87 @@ namespace TheConference.InfoBooth.Data
                 db.AddRange(speakers);
                 Console.WriteLine("   Added speakers.");
 
-                Console.WriteLine(" - Saving changes...");
                 db.SaveChanges();
-                Console.WriteLine("   Saved changes.");
+
+                Console.WriteLine(" - Start adding sessions...");
+                var sessions = new List<Session>() { };
+                var speakersPerSession = new List<SpeakersPerSession>() { };
+
+                var session1 =
+                    Session.Create(Event.Create(
+                            EventType.Talk, "JavaScript Patterns for 2017",
+                            start: new DateTime(2017, 06, 01, 10, 15, 00),
+                            end: new DateTime(2017, 06, 01, 11, 15, 00),
+                            room: db.Rooms.Where(r => r.Name == "1A").FirstOrDefault()
+                        ),
+                        track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
+                        level: SessionLevel.Introductionary,
+                        description: "The JavaScript language and ecosystem have seen dramatic changes in the last 2 years. In this sessions we'll look at patterns for organizing code using modules, talk about some of the pros and cons of new language features, and look at the current state of build tools and build patterns."
+                    );
+                sessions.Add(session1);
+                speakersPerSession.Add(SpeakersPerSession.Create(db.Speakers.FirstOrDefault(s => s.LastName == "Allen"), session1));
+
+                var session2 =
+                    Session.Create(Event.Create(
+                            EventType.Keynote, "If I knew then what I know now.",
+                            start: new DateTime(2017, 06, 01, 09, 00, 00),
+                            end: new DateTime(2017, 06, 01, 10, 00, 00),
+                            room: db.Rooms.Where(r => r.Name == "3A").FirstOrDefault()
+                        ),
+                        track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
+                        level: SessionLevel.Introductionary,
+                        description: "I’ve been coding for money for 25 years. I recently met a programmer who’s been coding for over 50. They asked me how they could become a web developer. Here’s what I told them."
+                    );
+                sessions.Add(session2);
+                speakersPerSession.Add(SpeakersPerSession.Create(db.Speakers.FirstOrDefault(s => s.LastName == "Hanselman"), session2));
+
+                var session3 =
+                    Session.Create(Event.Create(
+                            EventType.Talk, "SOLID Architecture in Slices not Layers",
+                            start: new DateTime(2017, 06, 01, 10, 15, 00),
+                            end: new DateTime(2017, 06, 01, 11, 15, 00),
+                            room: db.Rooms.Where(r => r.Name == "2A").FirstOrDefault()
+                        ),
+                        track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
+                        level: SessionLevel.Intermediate,
+                        description: "For too long we've lived under the tyranny of n-tier architectures. Building systems with complicated abstractions, needless indirection and more mocks in our tests than a comedy special. But there is a better way - thinking in terms of architectures of vertical slices instead horizontal layers. Once we embrace slices over layers, we open ourselves to a new, simpler architecture, changing how we build, organize and deploy systems."
+                    );
+                sessions.Add(session3);
+                speakersPerSession.Add(SpeakersPerSession.Create(db.Speakers.FirstOrDefault(s => s.LastName == "Bogard"), session3));
+
+                var session4 =
+                    Session.Create(Event.Create(
+                            EventType.QuestionAndAnswer, "Head to Head: Scott Allen and Jon Skeet with Scott Hanselman",
+                            start: new DateTime(2017, 06, 01, 11, 45, 00),
+                            end: new DateTime(2017, 06, 01, 12, 45, 00),
+                            room: db.Rooms.Where(r => r.Name == "1A").FirstOrDefault()
+                        ),
+                        track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
+                        level: SessionLevel.Introductionary,
+                        description: "We’re back with another Stack Overflow Question and Answer session - this time with K. Scott Allen going up against Jon Skeet. In this session, Scott Hanselman will select five questions from Stack Overflow pertaining to .NET and will send these questions to Scott and Jon a week before the talk."
+                    );
+                sessions.Add(session4);
+                speakersPerSession.AddRange(SpeakersPerSession.Create(new List<Speaker> { db.Speakers.FirstOrDefault(s => s.LastName == "Skeet"), db.Speakers.FirstOrDefault(s => s.LastName == "Allen"), db.Speakers.FirstOrDefault(s => s.LastName == "Hanselman") }, session4));
+
+                var session5 =
+                    Session.Create(Event.Create(
+                            EventType.Talk, "Domain Driven Design: The Good Parts",
+                            start: new DateTime(2017, 06, 01, 11, 45, 00),
+                            end: new DateTime(2017, 06, 01, 12, 45, 00),
+                            room: db.Rooms.Where(r => r.Name == "2A").FirstOrDefault()
+                        ),
+                        track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
+                        level: SessionLevel.Expert,
+                        description: "The greenfield project started out so promising. Instead of devolving into big ball of mud, the team decided to apply domain-driven design principles. Ubiquitous language, proper boundaries, encapsulation, it all made sense."
+                    );
+                sessions.Add(session5);
+                speakersPerSession.Add(SpeakersPerSession.Create(db.Speakers.FirstOrDefault(s => s.LastName == "Bogard"), session5));
+
+                db.AddRange(sessions);
+                db.AddRange(speakersPerSession);
+                Console.WriteLine("   Added sessions.");
+
+                SaveChanges(db);
 
                 Console.WriteLine("Seeding done.");
             }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TheConference.InfoBooth.Data;
+using TheConference.InfoBooth.Core.Model;
 
 namespace TheConference.InfoBooth.Data.Migrations
 {
@@ -24,7 +25,15 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
+                    b.Property<DateTime>("End");
+
                     b.Property<Guid?>("RoomId");
+
+                    b.Property<DateTime>("Start");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 
@@ -40,6 +49,8 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
@@ -50,15 +61,34 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("FullName");
+
                     b.HasKey("Id");
 
                     b.ToTable("Speakers");
+                });
+
+            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.SpeakersPerSession", b =>
+                {
+                    b.Property<Guid>("SessionId");
+
+                    b.Property<Guid>("SpeakerId");
+
+                    b.HasKey("SessionId", "SpeakerId");
+
+                    b.HasIndex("SpeakerId");
+
+                    b.ToTable("SpeakersPerSession");
                 });
 
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Track", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -69,6 +99,13 @@ namespace TheConference.InfoBooth.Data.Migrations
                 {
                     b.HasBaseType("TheConference.InfoBooth.Core.Model.Event");
 
+                    b.Property<string>("Description");
+
+                    b.Property<int>("Level");
+
+                    b.Property<Guid?>("TrackId");
+
+                    b.HasIndex("TrackId");
 
                     b.ToTable("Session");
 
@@ -77,9 +114,29 @@ namespace TheConference.InfoBooth.Data.Migrations
 
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Event", b =>
                 {
-                    b.HasOne("TheConference.InfoBooth.Core.Model.Room")
+                    b.HasOne("TheConference.InfoBooth.Core.Model.Room", "Room")
                         .WithMany("Events")
                         .HasForeignKey("RoomId");
+                });
+
+            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.SpeakersPerSession", b =>
+                {
+                    b.HasOne("TheConference.InfoBooth.Core.Model.Session", "Session")
+                        .WithMany("SessionsPerSpeaker")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TheConference.InfoBooth.Core.Model.Speaker", "Speaker")
+                        .WithMany("SpeakersPerSession")
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Session", b =>
+                {
+                    b.HasOne("TheConference.InfoBooth.Core.Model.Track", "Track")
+                        .WithMany()
+                        .HasForeignKey("TrackId");
                 });
         }
     }

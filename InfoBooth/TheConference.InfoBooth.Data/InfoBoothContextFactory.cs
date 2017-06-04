@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TheConference.InfoBooth.Core.Model;
+using TheConference.InfoBooth.Core.Sessions.Models;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
 namespace TheConference.InfoBooth.Data

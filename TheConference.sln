@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3A88B2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheConference.Shared.Infrastructure.Data.EFCore", "Shared\TheConference.Shared.Infrastructure.Data.EFCore\TheConference.Shared.Infrastructure.Data.EFCore.csproj", "{B17E424E-1732-43CD-8B4B-22B563F72387}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheConference.Shared.Web.RestApi", "Shared\TheConference.Shared.Web.RestApi\TheConference.Shared.Web.RestApi.csproj", "{5268D1F8-9862-4CE8-8417-210327046EFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B17E424E-1732-43CD-8B4B-22B563F72387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B17E424E-1732-43CD-8B4B-22B563F72387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B17E424E-1732-43CD-8B4B-22B563F72387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5268D1F8-9862-4CE8-8417-210327046EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5268D1F8-9862-4CE8-8417-210327046EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5268D1F8-9862-4CE8-8417-210327046EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5268D1F8-9862-4CE8-8417-210327046EFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +54,6 @@ Global
 		{33A97B50-3850-4523-A933-A30D114353ED} = {7F0E3E19-E632-4BE4-991F-01EE1C76B0E5}
 		{170BFC85-6905-4272-A2E0-795EFC292908} = {37CA5F4B-5306-405F-9B8A-644B662077AF}
 		{B17E424E-1732-43CD-8B4B-22B563F72387} = {3A88B2C8-C861-4FD4-9500-5E9B8AFCF82C}
+		{5268D1F8-9862-4CE8-8417-210327046EFB} = {3A88B2C8-C861-4FD4-9500-5E9B8AFCF82C}
 	EndGlobalSection
 EndGlobal

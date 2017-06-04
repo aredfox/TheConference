@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TheConference.InfoBooth.Core.Model;
 
-namespace TheConference.InfoBooth.Core.Model
+namespace TheConference.InfoBooth.Core.Sessions.Models
 {
     public class Session : Event
     {

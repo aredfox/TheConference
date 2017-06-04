@@ -1,16 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using TheConference.InfoBooth.Core;
 using TheConference.InfoBooth.Core.Model;
+using TheConference.InfoBooth.Core.Sessions.Models;
 
 namespace TheConference.InfoBooth.Data
 {
-    public class InfoBoothContext : DbContext
+    public class InfoBoothContext : DbContext, IInfoBoothContext
     {
         public DbSet<Attendee> Attendees { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Track> Tracks { get; set; }
-        public DbSet<Room> Rooms { get; set; }        
+        public DbSet<Room> Rooms { get; set; }
+
+        IQueryable<Session> IInfoBoothContext.Sessions => Sessions;
 
         public InfoBoothContext() : base() { }
 

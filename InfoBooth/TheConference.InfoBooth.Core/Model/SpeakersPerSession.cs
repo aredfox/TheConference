@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TheConference.InfoBooth.Core.Sessions.Models;
 
 namespace TheConference.InfoBooth.Core.Model
 {

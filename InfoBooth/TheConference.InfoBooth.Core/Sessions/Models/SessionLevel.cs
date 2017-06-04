@@ -1,5 +1,5 @@
-﻿namespace TheConference.InfoBooth.Core.Model
-{
+﻿namespace TheConference.InfoBooth.Core.Sessions.Models
+{ 
     public enum SessionLevel
     {        
         Introductionary = 100,

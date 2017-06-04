@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TheConference.InfoBooth.Core.Model;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
-namespace TheConference.InfoBooth.Core.Model
+namespace TheConference.InfoBooth.Core.Sessions.Models
 {
     public class Event : Entity<Guid>
     {        

@@ -10,8 +10,7 @@ namespace TheConference.InfoBooth.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Track> Tracks { get; set; }
-        public DbSet<Room> Rooms { get; set; }
-        public DbSet<SpeakersPerSession> SpeakersPerSessionSets { get; set; }
+        public DbSet<Room> Rooms { get; set; }        
 
         public InfoBoothContext() : base() { }
 

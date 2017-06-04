@@ -87,7 +87,7 @@ namespace TheConference.InfoBooth.Data.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("SpeakersPerSessionSets");
+                    b.ToTable("SpeakersPerSession");
                 });
 
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Track", b =>

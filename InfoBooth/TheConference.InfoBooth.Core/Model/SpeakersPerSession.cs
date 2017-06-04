@@ -9,9 +9,9 @@ namespace TheConference.InfoBooth.Core.Model
         private SpeakersPerSession() { }
 
         public Guid SpeakerId { get; private set; }
-        public virtual Speaker Speaker { get; private set; }
+        public Speaker Speaker { get; private set; }
         public Guid SessionId { get; private set; }
-        public virtual Session Session { get; private set; }
+        public Session Session { get; private set; }
 
         internal static IEnumerable<SpeakersPerSession> Create(IEnumerable<Speaker> speakers, Session session)
         {

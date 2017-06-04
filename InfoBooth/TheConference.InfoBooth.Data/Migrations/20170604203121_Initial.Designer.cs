@@ -9,7 +9,7 @@ using TheConference.InfoBooth.Core.Model;
 namespace TheConference.InfoBooth.Data.Migrations
 {
     [DbContext(typeof(InfoBoothContext))]
-    [Migration("20170604184942_Initial")]
+    [Migration("20170604203121_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,7 @@ namespace TheConference.InfoBooth.Data.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("SpeakersPerSession");
+                    b.ToTable("SpeakersPerSessionSets");
                 });
 
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Track", b =>

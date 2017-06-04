@@ -12,7 +12,7 @@ namespace TheConference.InfoBooth.Core.Model
         public Track Track { get; private set; }
         public SessionLevel Level { get; private set; }
         public IEnumerable<SpeakersPerSession> SessionsPerSpeaker { get; private set; }
-        public IEnumerable<Session> Speakers => SessionsPerSpeaker.Select(e => e.Session).AsEnumerable();
+        public IEnumerable<Speaker> Speakers => SessionsPerSpeaker.Select(e => e.Speaker).AsEnumerable();
 
         public Event AsEvent()
         {

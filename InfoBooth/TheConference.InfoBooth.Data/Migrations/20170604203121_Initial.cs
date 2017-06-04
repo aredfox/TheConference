@@ -89,7 +89,7 @@ namespace TheConference.InfoBooth.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SpeakersPerSession",
+                name: "SpeakersPerSessionSets",
                 columns: table => new
                 {
                     SessionId = table.Column<Guid>(nullable: false),
@@ -97,15 +97,15 @@ namespace TheConference.InfoBooth.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SpeakersPerSession", x => new { x.SessionId, x.SpeakerId });
+                    table.PrimaryKey("PK_SpeakersPerSessionSets", x => new { x.SessionId, x.SpeakerId });
                     table.ForeignKey(
-                        name: "FK_SpeakersPerSession_Events_SessionId",
+                        name: "FK_SpeakersPerSessionSets_Events_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SpeakersPerSession_Attendees_SpeakerId",
+                        name: "FK_SpeakersPerSessionSets_Attendees_SpeakerId",
                         column: x => x.SpeakerId,
                         principalTable: "Attendees",
                         principalColumn: "Id",
@@ -128,15 +128,15 @@ namespace TheConference.InfoBooth.Data.Migrations
                 column: "TrackId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SpeakersPerSession_SpeakerId",
-                table: "SpeakersPerSession",
+                name: "IX_SpeakersPerSessionSets_SpeakerId",
+                table: "SpeakersPerSessionSets",
                 column: "SpeakerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SpeakersPerSession");
+                name: "SpeakersPerSessionSets");
 
             migrationBuilder.DropTable(
                 name: "Events");

@@ -11,13 +11,14 @@ namespace TheConference.InfoBooth.Data
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<SpeakersPerSession> SpeakersPerSessionSets { get; set; }
 
         public InfoBoothContext() : base() { }
 
         public InfoBoothContext(DbContextOptions<InfoBoothContext> infoBoothContextOptions) 
             : base(infoBoothContextOptions) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {                        
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<SpeakersPerSession>(cfg => {
                 cfg.HasKey(e => new { e.SessionId, e.SpeakerId });
                 cfg.HasOne(e => e.Session)
@@ -31,8 +32,8 @@ namespace TheConference.InfoBooth.Data
                 cfg.Ignore(p => p.Sessions);
             });
             modelBuilder.Entity<Session>(cfg => {
-                cfg.Ignore(p => p.Speakers);
-            });
-        }        
+                cfg.Ignore(p => p.Speakers);                                
+            });            
+        }
     }    
 }

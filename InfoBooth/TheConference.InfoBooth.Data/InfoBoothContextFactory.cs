@@ -15,11 +15,31 @@ namespace TheConference.InfoBooth.Data
             Console.WriteLine("   Saved changes.");
         }
 
+        private void ListDataFromInfoBoothPerspective(InfoBoothContext db) {
+            Console.Clear();
+            foreach(var session in db.Sessions.Include(e => e.Room).Include(e => e.Track).Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker).OrderBy(s => s.Start).ToList()) {
+                Console.WriteLine($"{session.Title.ToUpper()}");
+                Console.WriteLine($"  ABOUT: {session.Description}");
+                Console.WriteLine($"  BY: {String.Join(", ", session.Speakers.OrderBy(s => s.LastName).Select(s => s.FullName))}");
+                Console.WriteLine($"@@ [ {session.Level.ToString()} | {session.Duration} | {session.Room.Name} ]");
+                Console.WriteLine();
+            }
+
+            Console.ReadKey();
+        }
+
         protected override void Seed() {
             var dbFactory = new InfoBoothContextFactory();
             using (var db = dbFactory.Create())
             {
                 Console.WriteLine("Start seeding...");
+                
+                if (db.Rooms.Any() || db.Tracks.Any() || db.Events.Any() || db.Attendees.Any())
+                {
+                    Console.WriteLine("  Data present in db, quitting...");
+                    ListDataFromInfoBoothPerspective(db);
+                    return;
+                }
 
                 Console.WriteLine(" - Start adding rooms...");
                 var rooms = new List<Room> {
@@ -104,7 +124,7 @@ namespace TheConference.InfoBooth.Data
                         ),
                         track: db.Tracks.Where(t => t.Name == "Developer").FirstOrDefault(),
                         level: SessionLevel.Introductionary,
-                        description: "I’ve been coding for money for 25 years. I recently met a programmer who’s been coding for over 50. They asked me how they could become a web developer. Here’s what I told them."
+                        description: "I've been coding for money for 25 years. I recently met a programmer who’s been coding for over 50. They asked me how they could become a web developer. Here’s what I told them."
                     );
                 sessions.Add(session2);
                 speakersPerSession.Add(SpeakersPerSession.Create(db.Speakers.FirstOrDefault(s => s.LastName == "Hanselman"), session2));
@@ -158,6 +178,8 @@ namespace TheConference.InfoBooth.Data
                 SaveChanges(db);
 
                 Console.WriteLine("Seeding done.");
+
+                ListDataFromInfoBoothPerspective(db);
             }
         }
     }

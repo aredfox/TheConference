@@ -13,9 +13,7 @@ namespace TheConference.Infrastructure.ConsoleApp
             if (firstArgument == null) return;
 
             if (firstArgument.Equals("seedinfobooth")) {
-                using (var db = new InfoBoothContextFactory().Create(seed: true))
-                {
-                }
+                using (var db = new InfoBoothContextFactory().Create(seed: true)) {}
             }
         }
     }

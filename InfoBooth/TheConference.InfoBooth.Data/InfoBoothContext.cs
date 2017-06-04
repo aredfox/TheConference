@@ -5,6 +5,7 @@ namespace TheConference.InfoBooth.Data
 {
     public class InfoBoothContext : DbContext
     {
+        public DbSet<Attendee> Attendees { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Session> Sessions { get; set; }

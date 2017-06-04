@@ -12,5 +12,9 @@ namespace TheConference.InfoBooth.Core.Model
         public SessionLevel Level { get; private set; }
         public IEnumerable<SpeakersPerSession> SessionsPerSpeaker { get; private set; }
         public IEnumerable<Session> Speakers => SessionsPerSpeaker.Select(e => e.Session).AsEnumerable();
+
+        public Event AsEvent() {
+            return this;
+        }
     }
 }

@@ -13,14 +13,14 @@ namespace TheConference.InfoBooth.Core.Model
         public string Name { get; private set; }                
         public IEnumerable<Event> Events { get; private set; }
 
-        public static Room Create(string name, IEnumerable<Event> events = null) {
+        internal static Room Create(string name, IEnumerable<Event> events = null) {
             if(String.IsNullOrWhiteSpace(name)) {
                 throw new ArgumentNullException(nameof(name));
             }
 
             return new Room {
                 Name = name,
-                Events = events
+                Events = events ?? new List<Event>()
             };
         }
     }

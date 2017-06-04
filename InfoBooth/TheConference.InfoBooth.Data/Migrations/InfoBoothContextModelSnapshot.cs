@@ -17,6 +17,27 @@ namespace TheConference.InfoBooth.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Attendee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Company");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attendees");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Attendee");
+                });
+
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Event", b =>
                 {
                     b.Property<Guid>("Id")
@@ -56,20 +77,6 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Speaker", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Biography");
-
-                    b.Property<string>("FullName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Speakers");
-                });
-
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.SpeakersPerSession", b =>
                 {
                     b.Property<Guid>("SessionId");
@@ -97,15 +104,30 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.ToTable("Tracks");
                 });
 
+            modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Speaker", b =>
+                {
+                    b.HasBaseType("TheConference.InfoBooth.Core.Model.Attendee");
+
+                    b.Property<string>("Biography");
+
+                    b.ToTable("Speaker");
+
+                    b.HasDiscriminator().HasValue("Speaker");
+                });
+
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Session", b =>
                 {
                     b.HasBaseType("TheConference.InfoBooth.Core.Model.Event");
+
+                    b.Property<Guid?>("AttendeeId");
 
                     b.Property<string>("Description");
 
                     b.Property<int>("Level");
 
                     b.Property<Guid?>("TrackId");
+
+                    b.HasIndex("AttendeeId");
 
                     b.HasIndex("TrackId");
 
@@ -136,6 +158,10 @@ namespace TheConference.InfoBooth.Data.Migrations
 
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Session", b =>
                 {
+                    b.HasOne("TheConference.InfoBooth.Core.Model.Attendee")
+                        .WithMany("MarkedSessions")
+                        .HasForeignKey("AttendeeId");
+
                     b.HasOne("TheConference.InfoBooth.Core.Model.Track", "Track")
                         .WithMany("Sessions")
                         .HasForeignKey("TrackId");

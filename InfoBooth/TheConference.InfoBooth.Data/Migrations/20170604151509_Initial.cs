@@ -25,6 +25,7 @@ namespace TheConference.InfoBooth.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Biography = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

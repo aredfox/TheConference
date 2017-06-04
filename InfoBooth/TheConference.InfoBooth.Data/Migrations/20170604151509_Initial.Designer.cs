@@ -9,7 +9,7 @@ using TheConference.InfoBooth.Core.Model;
 namespace TheConference.InfoBooth.Data.Migrations
 {
     [DbContext(typeof(InfoBoothContext))]
-    [Migration("20170604143523_Initial")]
+    [Migration("20170604151509_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,8 @@ namespace TheConference.InfoBooth.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Biography");
 
                     b.Property<string>("FullName");
 
@@ -136,7 +138,7 @@ namespace TheConference.InfoBooth.Data.Migrations
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Session", b =>
                 {
                     b.HasOne("TheConference.InfoBooth.Core.Model.Track", "Track")
-                        .WithMany()
+                        .WithMany("Sessions")
                         .HasForeignKey("TrackId");
                 });
         }

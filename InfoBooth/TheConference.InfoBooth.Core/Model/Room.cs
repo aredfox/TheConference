@@ -6,7 +6,9 @@ namespace TheConference.InfoBooth.Core.Model
 {
     public class Room : Entity<Guid>
     {
-        public string Name { get; private set; }
+        private Room() { }
+
+        public string Name { get; private set; }                
         public IEnumerable<Event> Events { get; private set; }
     }
 }

@@ -4,6 +4,8 @@ namespace TheConference.InfoBooth.Core.Model
 {
     public class SpeakersPerSession
     {
+        private SpeakersPerSession() { }
+
         public Guid SpeakerId { get; private set; }
         public Speaker Speaker { get; private set; }
         public Guid SessionId { get; private set; }

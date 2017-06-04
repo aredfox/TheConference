@@ -61,6 +61,8 @@ namespace TheConference.InfoBooth.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Biography");
+
                     b.Property<string>("FullName");
 
                     b.HasKey("Id");
@@ -135,7 +137,7 @@ namespace TheConference.InfoBooth.Data.Migrations
             modelBuilder.Entity("TheConference.InfoBooth.Core.Model.Session", b =>
                 {
                     b.HasOne("TheConference.InfoBooth.Core.Model.Track", "Track")
-                        .WithMany()
+                        .WithMany("Sessions")
                         .HasForeignKey("TrackId");
                 });
         }

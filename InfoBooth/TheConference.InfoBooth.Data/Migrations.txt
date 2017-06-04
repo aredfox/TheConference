@@ -1,0 +1,5 @@
+﻿Add migration command:
+   "dotnet ef --startup-project ../../TheConference.Infrastructure.ConsoleApp migrations add <MIGRATION_NAME>"
+
+Update database command:
+   "dotnet ef --startup-project ../../TheConference.Infrastructure.ConsoleApp database update"

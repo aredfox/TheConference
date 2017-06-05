@@ -7,6 +7,7 @@ namespace TheConference.InfoBooth.Core.Sessions.Models {
         protected Event() { }
 
         public string Title { get; protected set; }
+        public string Slug => Title.ToLower().Replace(" ", "-").Trim();
         public EventType Type { get; protected set; }
         public DateTime Start { get; protected set; }
         public DateTime End { get; protected set; }

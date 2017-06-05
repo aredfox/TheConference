@@ -1,19 +1,23 @@
-﻿using MediatR;
+﻿using System.Linq;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace TheConference.InfoBooth.Core.Sessions.Handlers {
-    public class ListSessionsHandler : IRequestHandler<ListSessionsQuery, ListSessionsResponse> {
+namespace TheConference.InfoBooth.Core.Speakers.Handlers {
+    public class GetSessionsBySpeakerSlugHandler : IRequestHandler<GetSessionsBySpeakerSlugQuery, GetSessionsBySpeakerSlugResponse> {
         private readonly IInfoBoothContext _db;
 
-        public ListSessionsHandler(IInfoBoothContext db) {
+        public GetSessionsBySpeakerSlugHandler(IInfoBoothContext db) {
             _db = db;
         }
 
-        public ListSessionsResponse Handle(ListSessionsQuery message) {
+        public GetSessionsBySpeakerSlugResponse Handle(GetSessionsBySpeakerSlugQuery message) {
             var sessions = _db
                 .Sessions
+                .Include(s => s.SessionsPerSpeaker).ThenInclude(s => s.Session)
+                .Include(s => s.SessionsPerSpeaker).ThenInclude(s => s.Speaker)
+                .Where(s => s.Speakers.Select(t => t.Slug).Contains(message.Slug.ToLower().Trim()))
                 .Select(s => new ListSessionsResponseItem {
                     Title = s.Title,
                     Description = s.Description,
@@ -25,13 +29,13 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers {
                 })
                 .ToList();
 
-            return new ListSessionsResponse {
+            return new GetSessionsBySpeakerSlugResponse {
                 Sessions = sessions
             };
         }
     }
 
-    public class ListSessionsResponse {
+    public class GetSessionsBySpeakerSlugResponse {
         public IEnumerable<ListSessionsResponseItem> Sessions { get; set; }
     }
 
@@ -45,5 +49,11 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers {
         public string Slug { get; set; }
     }
 
-    public class ListSessionsQuery : IRequest<ListSessionsResponse> { }
+    public class GetSessionsBySpeakerSlugQuery : IRequest<GetSessionsBySpeakerSlugResponse> {
+        public GetSessionsBySpeakerSlugQuery(string slug) {
+            Slug = slug;
+        }
+
+        public string Slug { get; set; }
+    }
 }

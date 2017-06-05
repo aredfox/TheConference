@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TheConference.InfoBooth.Core.Model;
 using TheConference.InfoBooth.Core.Sessions.Models;
+using TheConference.InfoBooth.Core.Speakers;
+using TheConference.InfoBooth.Core.Speakers.Models;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
-namespace TheConference.InfoBooth.Data
-{
-    public class InfoBoothContextFactory : DefaultDbContextFactory<InfoBoothContext>
-    {
+namespace TheConference.InfoBooth.Data {
+    public class InfoBoothContextFactory : DefaultDbContextFactory<InfoBoothContext> {
         private void SaveChanges(DbContext db) {
             Console.WriteLine(" - Saving changes...");
             db.SaveChanges();
@@ -20,7 +20,7 @@ namespace TheConference.InfoBooth.Data
             Console.Clear();
 
             Console.WriteLine("SESSIONS: ");
-            foreach(var session in db.Sessions.Include(e => e.Room).Include(e => e.Track).Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker).OrderBy(s => s.Start).ToList()) {
+            foreach (var session in db.Sessions.Include(e => e.Room).Include(e => e.Track).Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker).OrderBy(s => s.Start).ToList()) {
                 Console.WriteLine($"{session.Title.ToUpper()}");
                 Console.WriteLine($"  ABOUT: {session.Description}");
                 Console.WriteLine($"  BY: {String.Join(", ", session.Speakers.OrderBy(s => s.LastName).Select(s => s.FullName))}");
@@ -51,12 +51,10 @@ namespace TheConference.InfoBooth.Data
 
         protected override void Seed() {
             var dbFactory = new InfoBoothContextFactory();
-            using (var db = dbFactory.Create())
-            {
+            using (var db = dbFactory.Create()) {
                 Console.WriteLine("Start seeding...");
-                
-                if (db.Rooms.Any() || db.Tracks.Any() || db.Events.Any() || db.Attendees.Any())
-                {
+
+                if (db.Rooms.Any() || db.Tracks.Any() || db.Events.Any() || db.Attendees.Any()) {
                     Console.WriteLine("  Data present in db, quitting...");
                     ListDataFromInfoBoothPerspective(db);
                     return;
@@ -111,7 +109,7 @@ namespace TheConference.InfoBooth.Data
                     Speaker.Create(Attendee.Create("Jimmy", "Bogard", "Los Techies"), "I'm the chief architect at Headspring in Austin, TX. I focus on DDD, distributed systems, and any other acronym-centric design/architecture/methodology. I created AutoMapper and am a co-author of the ASP.NET MVC in Action books."),
                     Speaker.Create(Attendee.Create("Jon", "Skeet", "Google"), " Jon Skeet, a Software Engineer at Google and long-time Stack Overflow contributor. Creator of Noda Time, a better date/time API for .NET, Jon is the author of the book, C# in Depth, and he writes regularly about coding on his blog."),
                     Speaker.Create(Attendee.Create("Todd", "Motto", "Ultimate Angular"), "I’m Todd, a 26 year old front-end engineer from England, UK. I run Ultimate Angular (which just won “Best Angular product for Education” award!), teaching developers and teams how to become Angular experts through online courses."),
-                    Speaker.Create(Attendee.Create("Scott", "Allen", "Ode To Code LLC"), "I write software and consult through OdeToCode LLC. I have 25+ years of commercial software development experience across a wide range of technologies. I’ve successfully delivered software products for embedded, Windows, and web platforms. I’ve developed web services for Fortune 500 companies and firmware for startups.")                    
+                    Speaker.Create(Attendee.Create("Scott", "Allen", "Ode To Code LLC"), "I write software and consult through OdeToCode LLC. I have 25+ years of commercial software development experience across a wide range of technologies. I’ve successfully delivered software products for embedded, Windows, and web platforms. I’ve developed web services for Fortune 500 companies and firmware for startups.")
                 };
                 db.AddRange(speakers);
                 Console.WriteLine("   Added speakers.");

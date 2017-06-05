@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TheConference.InfoBooth.Core.Model;
 using TheConference.InfoBooth.Core.Sessions.Models;
 
-namespace TheConference.InfoBooth.Core.Model {
+namespace TheConference.InfoBooth.Core.Speakers.Models {
     public class Speaker : Attendee {
         private Speaker() : base() { }
 

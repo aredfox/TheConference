@@ -15,6 +15,7 @@ namespace TheConference.InfoBooth.Core.Model {
         public string FirstName { get; protected set; }
         public string LastName { get; protected set; }
         public string FullName => $"{FirstName} {LastName}";
+        public string Slug => FullName.ToLower().Replace(" ", "-").Trim();
         public string Company { get; protected set; }
         public bool HasCompany => String.IsNullOrWhiteSpace(Company);
         public IEnumerable<Session> MarkedSessions {

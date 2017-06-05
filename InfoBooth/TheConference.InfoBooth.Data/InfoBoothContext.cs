@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using TheConference.InfoBooth.Core;
 using TheConference.InfoBooth.Core.Model;
 using TheConference.InfoBooth.Core.Sessions.Models;
+using TheConference.InfoBooth.Core.Speakers;
+using TheConference.InfoBooth.Core.Speakers.Models;
 
 namespace TheConference.InfoBooth.Data {
     public class InfoBoothContext : DbContext, IInfoBoothContext {
@@ -12,8 +14,6 @@ namespace TheConference.InfoBooth.Data {
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Room> Rooms { get; set; }
-
-        IQueryable<Session> IInfoBoothContext.Sessions => Sessions;
 
         public InfoBoothContext() { }
 

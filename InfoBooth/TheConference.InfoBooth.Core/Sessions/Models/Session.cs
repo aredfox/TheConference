@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using TheConference.InfoBooth.Core.Model;
+using TheConference.InfoBooth.Core.Speakers;
+using TheConference.InfoBooth.Core.Speakers.Models;
 
 namespace TheConference.InfoBooth.Core.Sessions.Models {
     public class Session : Event {

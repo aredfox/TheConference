@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TheConference.InfoBooth.Core.Sessions.Models;
 
-namespace TheConference.InfoBooth.Core.Model
-{
-    public class SpeakersPerSession
-    {
+namespace TheConference.InfoBooth.Core.Model {
+    public class SpeakersPerSession {
         private SpeakersPerSession() { }
 
         public Guid SpeakerId { get; private set; }
@@ -14,8 +12,7 @@ namespace TheConference.InfoBooth.Core.Model
         public Guid SessionId { get; private set; }
         public Session Session { get; private set; }
 
-        internal static IEnumerable<SpeakersPerSession> Create(IEnumerable<Speaker> speakers, Session session)
-        {
+        internal static IEnumerable<SpeakersPerSession> Create(IEnumerable<Speaker> speakers, Session session) {
             if (speakers == null) {
                 throw new ArgumentNullException(nameof(speakers));
             }

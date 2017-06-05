@@ -4,10 +4,8 @@ using TheConference.InfoBooth.Core;
 using TheConference.InfoBooth.Core.Model;
 using TheConference.InfoBooth.Core.Sessions.Models;
 
-namespace TheConference.InfoBooth.Data
-{
-    public class InfoBoothContext : DbContext, IInfoBoothContext
-    {
+namespace TheConference.InfoBooth.Data {
+    public class InfoBoothContext : DbContext, IInfoBoothContext {
         public DbSet<Attendee> Attendees { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -17,9 +15,9 @@ namespace TheConference.InfoBooth.Data
 
         IQueryable<Session> IInfoBoothContext.Sessions => Sessions;
 
-        public InfoBoothContext() : base() { }
+        public InfoBoothContext() { }
 
-        public InfoBoothContext(DbContextOptions<InfoBoothContext> infoBoothContextOptions) 
+        public InfoBoothContext(DbContextOptions<InfoBoothContext> infoBoothContextOptions)
             : base(infoBoothContextOptions) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -36,8 +34,8 @@ namespace TheConference.InfoBooth.Data
                 cfg.Ignore(p => p.Sessions);
             });
             modelBuilder.Entity<Session>(cfg => {
-                cfg.Ignore(p => p.Speakers);                                
-            });            
+                cfg.Ignore(p => p.Speakers);
+            });
         }
-    }    
+    }
 }

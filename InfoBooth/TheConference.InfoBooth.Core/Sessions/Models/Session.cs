@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TheConference.InfoBooth.Core.Model;
 
-namespace TheConference.InfoBooth.Core.Sessions.Models
-{
-    public class Session : Event
-    {
+namespace TheConference.InfoBooth.Core.Sessions.Models {
+    public class Session : Event {
         private Session() : base() { }
 
         public string Description { get; private set; }
@@ -15,19 +13,17 @@ namespace TheConference.InfoBooth.Core.Sessions.Models
         public IEnumerable<SpeakersPerSession> SessionsPerSpeaker { get; private set; }
         public IEnumerable<Speaker> Speakers => SessionsPerSpeaker.Select(e => e.Speaker).AsEnumerable();
 
-        public Event AsEvent()
-        {
+        public Event AsEvent() {
             return this;
         }
 
-        internal static Session Create(Event @event, Track track, SessionLevel level, string description)
-        {
+        internal static Session Create(Event @event, Track track, SessionLevel level, string description) {
             if (@event == null) {
                 throw new ArgumentNullException(nameof(@event));
             }
             if (track == null) {
                 throw new ArgumentNullException(nameof(track));
-            }            
+            }
             if (String.IsNullOrWhiteSpace(description)) {
                 throw new ArgumentNullException(nameof(description));
             }

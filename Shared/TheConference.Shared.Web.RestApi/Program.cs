@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace TheConference.Shared.Web.RestApi
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+namespace TheConference.Shared.Web.RestApi {
+    public class Program {
+        public static void Main(string[] args) {
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())

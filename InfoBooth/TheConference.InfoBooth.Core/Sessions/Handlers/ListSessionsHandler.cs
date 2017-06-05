@@ -3,18 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TheConference.InfoBooth.Core.Sessions.Handlers
-{
-    public class ListSessionsHandler : IRequestHandler<ListSessionsQuery, ListSessionsResponse>
-    {
+namespace TheConference.InfoBooth.Core.Sessions.Handlers {
+    public class ListSessionsHandler : IRequestHandler<ListSessionsQuery, ListSessionsResponse> {
         private readonly IInfoBoothContext _db;
 
         public ListSessionsHandler(IInfoBoothContext db) {
             _db = db;
         }
 
-        public ListSessionsResponse Handle(ListSessionsQuery message)
-        {
+        public ListSessionsResponse Handle(ListSessionsQuery message) {
             var sessions = _db
                 .Sessions
                 .Select(s => new ListSessionsResponseItem {
@@ -33,13 +30,11 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers
         }
     }
 
-    public class ListSessionsResponse
-    {
+    public class ListSessionsResponse {
         public IEnumerable<ListSessionsResponseItem> Sessions { get; set; }
     }
 
-    public class ListSessionsResponseItem
-    {
+    public class ListSessionsResponseItem {
         public string Title { get; set; }
         public string Description { get; set; }
         public string RoomName { get; set; }

@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using TheConference.InfoBooth.Core.Sessions.Models;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
-namespace TheConference.InfoBooth.Core.Model
-{
-    public class Room : Entity<Guid>
-    {
+namespace TheConference.InfoBooth.Core.Model {
+    public class Room : Entity<Guid> {
         private Room() {
             Events = new List<Event>();
         }
 
-        public string Name { get; private set; }                
+        public string Name { get; private set; }
         public IEnumerable<Event> Events { get; private set; }
 
         internal static Room Create(string name, IEnumerable<Event> events = null) {
-            if(String.IsNullOrWhiteSpace(name)) {
+            if (String.IsNullOrWhiteSpace(name)) {
                 throw new ArgumentNullException(nameof(name));
             }
 

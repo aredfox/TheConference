@@ -1,7 +1,5 @@
-﻿namespace TheConference.InfoBooth.Core.Sessions.Models
-{
-    public enum EventType
-    {
+﻿namespace TheConference.InfoBooth.Core.Sessions.Models {
+    public enum EventType {
         Keynote,
         Talk,
         QuestionAndAnswer,

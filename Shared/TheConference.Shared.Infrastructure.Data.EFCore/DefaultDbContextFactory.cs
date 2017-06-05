@@ -3,19 +3,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace TheConference.Shared.Infrastructure.Data.EFCore
-{
+namespace TheConference.Shared.Infrastructure.Data.EFCore {
     public abstract class DefaultDbContextFactory<T> : IDbContextFactory<T>
-        where T : DbContext, new()
-    {
+        where T : DbContext, new() {
         public T Create(bool seed = false) {
             var environmentName = Environment.GetEnvironmentVariable("Hosting:Environment");
             var basePath = AppContext.BaseDirectory;
             return Create(basePath, environmentName, seed);
         }
 
-        public T Create(DbContextFactoryOptions options)
-        {
+        public T Create(DbContextFactoryOptions options) {
             return Create(options.ContentRootPath, options.EnvironmentName, false);
         }
         public T Create(DbContextFactoryOptions options, bool seed) {
@@ -33,18 +30,15 @@ namespace TheConference.Shared.Infrastructure.Data.EFCore
 
             var connstr = config.GetConnectionString("(default)");
 
-            if (String.IsNullOrWhiteSpace(connstr) == true)
-            {
+            if (String.IsNullOrWhiteSpace(connstr) == true) {
                 throw new InvalidOperationException(
                 "Could not find a connection string named '(default)'.");
-            } else
-            {
+            } else {
                 return Create(connstr, seed);
             }
         }
 
-        private T Create(string connectionString, bool seed = false)
-        {
+        private T Create(string connectionString, bool seed = false) {
             if (string.IsNullOrEmpty(connectionString))
                 throw new ArgumentException($"{nameof(connectionString)} is null or empty.", nameof(connectionString));
 
@@ -61,6 +55,6 @@ namespace TheConference.Shared.Infrastructure.Data.EFCore
             return instance;
         }
 
-        protected abstract void Seed();        
+        protected abstract void Seed();
     }
 }

@@ -4,10 +4,8 @@ using System.Linq;
 using TheConference.InfoBooth.Core.Sessions.Models;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
-namespace TheConference.InfoBooth.Core.Model
-{
-    public class Attendee : Entity<Guid>
-    {
+namespace TheConference.InfoBooth.Core.Model {
+    public class Attendee : Entity<Guid> {
         private readonly HashSet<Session> _markedSessions = new HashSet<Session>();
 
         protected Attendee() {
@@ -38,7 +36,7 @@ namespace TheConference.InfoBooth.Core.Model
         }
 
         internal static Attendee Create(string firstName, string lastName, string company = null, IEnumerable<Session> markedSessions = null) {
-            if(String.IsNullOrWhiteSpace(firstName)) {
+            if (String.IsNullOrWhiteSpace(firstName)) {
                 throw new ArgumentNullException(nameof(firstName));
             }
             if (String.IsNullOrWhiteSpace(lastName)) {

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using TheConference.InfoBooth.Core.Model;
 using TheConference.Shared.Infrastructure.Data.EFCore;
 
-namespace TheConference.InfoBooth.Core.Sessions.Models
-{
-    public class Event : Entity<Guid>
-    {        
+namespace TheConference.InfoBooth.Core.Sessions.Models {
+    public class Event : Entity<Guid> {
         protected Event() { }
 
         public string Title { get; protected set; }
@@ -17,7 +14,7 @@ namespace TheConference.InfoBooth.Core.Sessions.Models
         public Room Room { get; protected set; }
 
         internal static Event Create(EventType type, string title, DateTime start, DateTime end, Room room) {
-            if(String.IsNullOrWhiteSpace(title)){
+            if (String.IsNullOrWhiteSpace(title)) {
                 throw new ArgumentNullException(nameof(title));
             }
             if (start == default(DateTime)) {

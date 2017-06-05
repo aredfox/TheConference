@@ -27,6 +27,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Startup.Autofac.cs" />
+    <None Include="Startup.Configure.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\InfoBooth\TheConference.InfoBooth.Core\TheConference.InfoBooth.Core.csproj" />
     <ProjectReference Include="..\..\InfoBooth\TheConference.InfoBooth.Data\TheConference.InfoBooth.Data.csproj" />
     <ProjectReference Include="..\TheConference.Shared.Infrastructure.Data.EFCore\TheConference.Shared.Infrastructure.Data.EFCore.csproj" />

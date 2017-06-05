@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace TheConference.InfoBooth.Core.Sessions.Handlers {
     public class ListSessionsHandler : IRequestHandler<ListSessionsQuery, ListSessionsResponse> {
@@ -14,9 +15,11 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers {
         public ListSessionsResponse Handle(ListSessionsQuery message) {
             var sessions = _db
                 .Sessions
+                .Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker)
                 .Select(s => new ListSessionsResponseItem {
                     Title = s.Title,
                     Description = s.Description,
+                    Speakers = s.Speakers.Select(spk => spk.FullName).ToList(),
                     Duration = s.Duration,
                     Start = s.Start,
                     End = s.End,
@@ -38,6 +41,7 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers {
     public class ListSessionsResponseItem {
         public string Title { get; set; }
         public string Description { get; set; }
+        public List<string> Speakers { get; set; }
         public string RoomName { get; set; }
         public TimeSpan Duration { get; set; }
         public DateTime Start { get; set; }

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InfoBooth\TheConference.InfoBooth.Core\TheConference.InfoBooth.Core.csproj" />
+    <ProjectReference Include="..\InfoBooth\TheConference.InfoBooth.Data\TheConference.InfoBooth.Data.csproj" />
+  </ItemGroup>
+
+</Project>

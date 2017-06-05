@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MediatR;
 using Autofac;
-using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using TheConference.InfoBooth.Core;
 using TheConference.InfoBooth.Data;
@@ -36,12 +36,10 @@ namespace TheConference.Shared.Web.RestApi {
 
             // DI AutoFac
             var builder = new ContainerBuilder();
+            builder.RegisterAssemblyModules(Assembly.Load(new AssemblyName("TheConference.InfoBooth.Data")));
             builder.Populate(services);
-            builder.Register(_ => new InfoBoothContextFactory().Create()).As<IInfoBoothContext>().InstancePerLifetimeScope();
-            //services.AddTransient<IInfoBoothContext, InfoBoothContext>(_ => new InfoBoothContextFactory().Create());
-            this.ApplicationContainer = builder.Build();
-
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

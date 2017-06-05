@@ -14,6 +14,7 @@ namespace TheConference.InfoBooth.Data {
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<SpeakersPerSession> SpeakersPerSession { get; set; }
 
         public InfoBoothContext() { }
 

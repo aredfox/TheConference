@@ -4,7 +4,8 @@ using TheConference.InfoBooth.Core.Speakers.Models;
 
 namespace TheConference.InfoBooth.Core {
     public interface IInfoBoothContext {
-        DbSet<Session> Sessions { get; set; }
         DbSet<Speaker> Speakers { get; set; }
+        DbSet<Session> Sessions { get; set; }
+        DbSet<SpeakersPerSession> SpeakersPerSession { get; set; }
     }
 }

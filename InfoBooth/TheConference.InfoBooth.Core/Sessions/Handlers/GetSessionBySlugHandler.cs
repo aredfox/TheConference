@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace TheConference.InfoBooth.Core.Sessions.Handlers {
     public class GetSessionBySlugHandler : IRequestHandler<GetSessionBySlugQuery, GetSessionBySlugResponse> {

@@ -13,20 +13,38 @@ namespace TheConference.InfoBooth.Core.Sessions.Handlers {
         }
 
         public ListSessionsResponse Handle(ListSessionsQuery message) {
-            var sessions = _db
-                .Sessions
-                .Include(e => e.SessionsPerSpeaker).ThenInclude(e => e.Speaker)
-                .Select(s => new ListSessionsResponseItem {
-                    Title = s.Title,
-                    Description = s.Description,
-                    Speakers = s.Speakers.Select(spk => spk.FullName).ToList(),
-                    Duration = s.Duration,
-                    Start = s.Start,
-                    End = s.End,
-                    RoomName = s.Room.Name,
-                    Slug = s.Slug
-                })
+            var manyToMany = _db.SpeakersPerSession
+                .Include(sps => sps.Speaker)
+                .Include(sps => sps.Session).ThenInclude(s => s.Room)
+                .GroupBy(s => s.Session)
                 .ToList();
+
+            var sessions = new List<ListSessionsResponseItem>();
+            foreach (var session in manyToMany) {
+                var sessionItem = new ListSessionsResponseItem();
+                sessionItem.Title = session.Key.Title;
+                sessionItem.Description = session.Key.Description;
+                sessionItem.Speakers = session.Key.Speakers.Select(spk => spk.FullName).ToList();
+                sessionItem.Duration = session.Key.Duration;
+                sessionItem.Start = session.Key.Start;
+                sessionItem.End = session.Key.End;
+                sessionItem.RoomName = session.Key.Room.Name;
+                sessionItem.Slug = session.Key.Slug;
+                sessions.Add(sessionItem);
+            }
+
+            /*var sessions = manyToMany
+                .Select(s => new ListSessionsResponseItem {
+                    Title = s.Key.Title,
+                    Description = s.Key.Description,
+                    Speakers = s.Key.Speakers.Select(spk => spk.FullName).ToList(),
+                    Duration = s.Key.Duration,
+                    Start = s.Key.Start,
+                    End = s.Key.End,
+                    RoomName = s.Key.Room.Name,
+                    Slug = s.Key.Slug
+                })
+                .ToList();*/
 
             return new ListSessionsResponse {
                 Sessions = sessions
